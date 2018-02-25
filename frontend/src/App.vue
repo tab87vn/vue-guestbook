@@ -2,7 +2,7 @@
   <v-app id="inspire">
     <v-navigation-drawer fixed v-model="drawer" app>
       <v-list dense>
-        <v-list-tile @click="yell('home')">
+        <v-list-tile @click="navigate('home')">
           <v-list-tile-action>
             <v-icon>home</v-icon>
           </v-list-tile-action>
@@ -10,7 +10,7 @@
             <v-list-tile-title>Home</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile @click="yell('contact')">
+        <v-list-tile @click="navigate('guestbook')">
           <v-list-tile-action>
             <v-icon>contact_mail</v-icon>
           </v-list-tile-action>
@@ -42,14 +42,22 @@ export default {
   name: 'App',
   data () {
     return {
+      defaultTitle: 'VueJs Guestbook',
       title: 'VueJs Guestbook',
       drawer: null
     }
   },
   methods: {
-    yell: function (val) {
-      // alert('We are moving to ' + val)
+    navigate: function (val) {
       this.title = val.toUpperCase()
+      switch (val) {
+        case 'guestbook':
+          this.$router.push({name: 'Guestbook'})
+          break
+        default:
+          this.$router.push({name: 'Home'})
+          this.title = this.defaultTitle
+      }
     }
   }
 }
